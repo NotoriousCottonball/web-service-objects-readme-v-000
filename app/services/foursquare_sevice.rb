@@ -12,7 +12,7 @@ class FoursquareService
       body["access_token"]
   end    
 
-   def friends(token)
+  def friends(token)
       resp = Faraday.get("https://api.foursquare.com/v2/users/self/friends") do |req|
           req.params['oauth_token'] = token
           # don't forget that pesky v param for versioning
