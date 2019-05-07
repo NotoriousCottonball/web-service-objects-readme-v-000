@@ -14,7 +14,7 @@ class SearchesController < ApplicationController
 	    
 	  body = foursquare.foursquare(ENV['FOURSQUARE_CLIENT_ID'], ENV['FOURSQUARE_CLIENT_SECRET'], params[:zipcode])
 
-    if !!@body
+    if !!body
       @venues = body["response"]["venues"]
     else
       @error = body["meta"]["errorDetail"]
