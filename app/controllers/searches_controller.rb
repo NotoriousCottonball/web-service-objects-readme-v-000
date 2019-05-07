@@ -11,5 +11,18 @@ class SearchesController < ApplicationController
   def foursquare
   
     foursquare = FoursquareService.new
-	    body = foursquare.foursquare(ENV['FOURSQUARE_CLIENT_ID'], ENV['FOURSQUARE_CLIENT_SECRET'], params[:zipcode])
-end
+	    
+	  body = foursquare.foursquare(ENV['FOURSQUARE_CLIENT_ID'], ENV['FOURSQUARE_CLIENT_SECRET'], params[:zipcode])
+
+    if !!@body
+      @venues = body["response"]["venues"]
+    else
+      @error = body["meta"]["errorDetail"]
+    end
+
+    render 'search'
+
+    rescue Faraday::TimeoutError
+      @error = "There was a timeout. Please try again."
+      render 'search'
+    end
